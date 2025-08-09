@@ -32,6 +32,21 @@
             <button class="duration-btn" onclick="assignmentManager.getAssignment('deep')">This Lifetime</button>
             <button class="duration-btn" onclick="assignmentManager.getAssignment('random')">Surprise Me</button>
         </div>
+        
+        <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(0,255,0,0.3);">
+            <p style="color: rgba(0,255,0,0.7); margin-bottom: 1rem; text-align: center;">COMMAND OPTIONS:</p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <button class="duration-btn" style="background: rgba(0,255,0,0.1);" onclick="window.location.href='auth.html'">
+                    AGENT PORTAL
+                </button>
+                <button class="duration-btn" style="background: rgba(0,255,0,0.1);" onclick="window.location.href='create.html'">
+                    CREATE MISSION
+                </button>
+                <button class="duration-btn" style="background: rgba(0,255,0,0.1);" onclick="assignmentManager.accessFullSystem()">
+                    BROWSE ALL
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- Assignment Reveal Screen -->
@@ -61,7 +76,8 @@
                 <button class="nav-btn" data-filter="quick">Quick (5-20 min)</button>
                 <button class="nav-btn" data-filter="medium">Medium (Week-Month)</button>
                 <button class="nav-btn" data-filter="deep">Deep (Lifetime)</button>
-                <button class="nav-btn add-btn" id="addAssignmentBtn">+ Submit Assignment</button>
+                <button class="nav-btn add-btn" onclick="window.location.href='create.html'">+ Create Content</button>
+                <button class="nav-btn" style="background: rgba(255,255,0,0.2); border-color: var(--warning-yellow);" onclick="window.location.href='auth.html'">Agent Portal</button>
             </div>
         </nav>
         

@@ -1,0 +1,256 @@
+{
+  "quick": [
+    {
+      "title": "Deploy Micro-Positivity Protocol",
+      "description": "Leave a handwritten note of encouragement in a public place where someone will find it today.",
+      "objective": "Deploy micro-positivity",
+      "classification": "SOCIAL IMPACT",
+      "duration": "5 minutes",
+      "location_type": "local",
+      "skills_required": []
+    },
+    {
+      "title": "Knowledge Distribution Mission",
+      "description": "Research one fact about renewable energy and share it with someone who doesn't know it.",
+      "objective": "Spread critical knowledge",
+      "classification": "EDUCATION",
+      "duration": "10 minutes",
+      "location_type": "virtual",
+      "skills_required": []
+    },
+    {
+      "title": "Environmental Restoration Task",
+      "description": "Pick up 10 pieces of trash that aren't yours and dispose of them properly.",
+      "objective": "Environmental restoration",
+      "classification": "PLANET CARE",
+      "duration": "5 minutes",
+      "location_type": "local",
+      "skills_required": []
+    },
+    {
+      "title": "Cultural Bridge Protocol",
+      "description": "Learn how to say 'thank you' in three languages you don't speak and use them today.",
+      "objective": "Cultural connection",
+      "classification": "SOCIAL IMPACT",
+      "duration": "15 minutes",
+      "location_type": "virtual",
+      "skills_required": []
+    },
+    {
+      "title": "Beauty Amplification Mission",
+      "description": "Take a photo of something beautiful in your area and share the location with a stranger online.",
+      "objective": "Beauty distribution",
+      "classification": "CULTURAL",
+      "duration": "10 minutes",
+      "location_type": "local",
+      "skills_required": []
+    },
+    {
+      "title": "Kindness Multiplication Task",
+      "description": "Pay for the coffee/meal of the person behind you in line without them knowing.",
+      "objective": "Anonymous kindness",
+      "classification": "SOCIAL IMPACT",
+      "duration": "5 minutes",
+      "location_type": "local",
+      "skills_required": []
+    },
+    {
+      "title": "Emergency Preparedness Check",
+      "description": "Verify that three elderly neighbors have emergency contact information posted.",
+      "objective": "Community resilience",
+      "classification": "SAFETY",
+      "duration": "20 minutes",
+      "location_type": "local",
+      "skills_required": []
+    },
+    {
+      "title": "Digital Declutter Operation",
+      "description": "Delete 100 unnecessary files from your device and organize your digital workspace.",
+      "objective": "Digital hygiene",
+      "classification": "PERSONAL",
+      "duration": "15 minutes",
+      "location_type": "virtual",
+      "skills_required": []
+    }
+  ],
+  "medium": [
+    {
+      "title": "Community Story Documentation",
+      "description": "Document a local business owner's story and share it to help their community visibility.",
+      "objective": "Economic ecosystem support",
+      "classification": "COMMUNITY BUILDING",
+      "duration": "3-5 days",
+      "location_type": "local",
+      "skills_required": ["writing", "interviewing"]
+    },
+    {
+      "title": "Knowledge Transfer Protocol",
+      "description": "Teach one person a valuable skill you possess through a hands-on session this week.",
+      "objective": "Skill distribution",
+      "classification": "EDUCATION",
+      "duration": "One week",
+      "location_type": "local",
+      "skills_required": ["teaching"]
+    },
+    {
+      "title": "Network Amplification Mission",
+      "description": "Connect two people in your network who should collaborate but don't know each other.",
+      "objective": "Relationship catalyst",
+      "classification": "SOCIAL ENGINEERING",
+      "duration": "This week",
+      "location_type": "virtual",
+      "skills_required": ["networking"]
+    },
+    {
+      "title": "Local Resilience Assessment",
+      "description": "Create a neighborhood disaster preparedness plan and share it with 10 households.",
+      "objective": "Emergency readiness",
+      "classification": "SAFETY",
+      "duration": "2 weeks",
+      "location_type": "local",
+      "skills_required": ["planning", "research"]
+    },
+    {
+      "title": "Skill Archive Project",
+      "description": "Record an elderly person teaching a traditional skill or sharing important knowledge.",
+      "objective": "Wisdom preservation",
+      "classification": "CULTURAL",
+      "duration": "1 week",
+      "location_type": "local",
+      "skills_required": ["video recording", "interviewing"]
+    },
+    {
+      "title": "Community Resource Mapping",
+      "description": "Create a map of all free resources (libraries, parks, services) in your area and distribute it.",
+      "objective": "Resource accessibility",
+      "classification": "COMMUNITY BUILDING",
+      "duration": "2 weeks",
+      "location_type": "local",
+      "skills_required": ["research", "design"]
+    },
+    {
+      "title": "Local Food Security Initiative",
+      "description": "Start a community garden or food sharing program in an underserved area.",
+      "objective": "Food access improvement",
+      "classification": "COMMUNITY BUILDING",
+      "duration": "1 month",
+      "location_type": "local",
+      "skills_required": ["gardening", "organizing"]
+    },
+    {
+      "title": "Digital Literacy Mission",
+      "description": "Teach 5 people over 65 how to use essential digital tools safely.",
+      "objective": "Digital inclusion",
+      "classification": "EDUCATION",
+      "duration": "3 weeks",
+      "location_type": "local",
+      "skills_required": ["technology", "teaching", "patience"]
+    }
+  ],
+  "deep": [
+    {
+      "title": "Carbon Neutrality System Design",
+      "description": "Design a comprehensive plan for your neighborhood to become carbon neutral within 5 years.",
+      "objective": "Climate intervention system",
+      "classification": "PLANETARY DEFENSE",
+      "duration": "Multi-year project",
+      "location_type": "regional",
+      "skills_required": ["environmental science", "planning", "systems thinking"]
+    },
+    {
+      "title": "Knowledge Preservation Protocol",
+      "description": "Create an open-source educational resource that preserves important knowledge for future generations.",
+      "objective": "Information immortality",
+      "classification": "SPECIES CONTINUITY",
+      "duration": "Ongoing mission",
+      "location_type": "global",
+      "skills_required": ["research", "writing", "web development"]
+    },
+    {
+      "title": "Sustainable Expansion Research",
+      "description": "Research and develop a solution for carbon-neutral space exploration.",
+      "objective": "Expansion without destruction",
+      "classification": "SPECIES ADVANCEMENT",
+      "duration": "Lifetime commitment",
+      "location_type": "global",
+      "skills_required": ["engineering", "environmental science", "research"]
+    },
+    {
+      "title": "Democratic Innovation Project",
+      "description": "Design new forms of democratic participation that work at internet scale.",
+      "objective": "Governance evolution",
+      "classification": "SOCIAL SYSTEMS",
+      "duration": "5-10 years",
+      "location_type": "global",
+      "skills_required": ["political science", "technology", "systems design"]
+    },
+    {
+      "title": "Consciousness Research Initiative",
+      "description": "Contribute to research on consciousness preservation and transfer across time and space.",
+      "objective": "Awareness continuity",
+      "classification": "SPECIES CONTINUITY",
+      "duration": "50+ years",
+      "location_type": "global",
+      "skills_required": ["neuroscience", "computer science", "philosophy"]
+    },
+    {
+      "title": "Interstellar Communication Protocol",
+      "description": "Develop systems for maintaining contact with generation ships and potential extraterrestrial intelligence.",
+      "objective": "Cosmic connection",
+      "classification": "SPECIES ADVANCEMENT",
+      "duration": "20+ years",
+      "location_type": "global",
+      "skills_required": ["telecommunications", "physics", "linguistics"]
+    },
+    {
+      "title": "Self-Sustaining Habitat Design",
+      "description": "Engineer closed-loop ecosystems capable of supporting human civilization beyond Earth.",
+      "objective": "Habitat independence",
+      "classification": "SPECIES ADVANCEMENT",
+      "duration": "100+ years",
+      "location_type": "global",
+      "skills_required": ["engineering", "biology", "systems design"]
+    },
+    {
+      "title": "Post-Scarcity Economic Model",
+      "description": "Design economic systems that function when automation provides abundance.",
+      "objective": "Economic evolution",
+      "classification": "SOCIAL SYSTEMS",
+      "duration": "20+ years",
+      "location_type": "global",
+      "skills_required": ["economics", "systems thinking", "sociology"]
+    }
+  ],
+  "classifications": [
+    "SOCIAL IMPACT",
+    "EDUCATION", 
+    "PLANET CARE",
+    "COMMUNITY BUILDING",
+    "SAFETY",
+    "CULTURAL",
+    "PERSONAL",
+    "SOCIAL ENGINEERING",
+    "PLANETARY DEFENSE",
+    "SPECIES CONTINUITY",
+    "SPECIES ADVANCEMENT",
+    "SOCIAL SYSTEMS"
+  ],
+  "scales": [
+    "personal",
+    "community", 
+    "regional",
+    "national",
+    "species"
+  ],
+  "duration_types": [
+    "quick",
+    "medium", 
+    "deep"
+  ],
+  "location_types": [
+    "local",
+    "regional",
+    "global",
+    "virtual"
+  ]
+}

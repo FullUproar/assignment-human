@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Human</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="cursor-cross"></div>
+    <div class="scanning-line"></div>
+
+    <!-- Terminal Splash Screen -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="terminal-header">SECURE CONNECTION ESTABLISHED</div>
+        <h1 class="assignment-title">ASSIGNMENT HUMAN</h1>
+        <div class="agent-info" id="agentInfo">AGENT: INITIALIZING...</div>
+        <div class="status-info">STATUS: AWAITING ORDERS</div>
+        <div class="mission-prompt">Ready for your assignment?</div>
+        
+        <div class="duration-selector">
+            <button class="duration-btn" onclick="assignmentManager.getMission('quick')">5 Minutes</button>
+            <button class="duration-btn" onclick="assignmentManager.getMission('medium')">This Week</button>
+            <button class="duration-btn" onclick="assignmentManager.getMission('deep')">This Lifetime</button>
+            <button class="duration-btn" onclick="assignmentManager.getMission('random')">Surprise Me</button>
+        </div>
+    </div>
+
+    <!-- Assignment Reveal Screen -->
+    <div class="assignment-reveal" id="assignmentReveal">
+        <div class="mission-header" id="missionHeader">MISSION BRIEFING</div>
+        <div class="assignment-content" id="assignmentContent"></div>
+        <div class="mission-details" id="missionDetails"></div>
+        <div class="action-controls">
+            <button class="control-btn" onclick="assignmentManager.acceptMission()">Accept Mission</button>
+            <button class="control-btn secondary" onclick="assignmentManager.requestNewMission()">Request New Mission</button>
+            <button class="control-btn secondary" onclick="assignmentManager.accessFullSystem()">Access Full System</button>
+        </div>
+    </div>
+
+    <!-- Platform View (Full System) -->
+    <div class="platform-view" id="platformView">
+        <header class="platform-header">
+            <div class="container">
+                <h1>ASSIGNMENT HUMAN COMMAND CENTER</h1>
+                <button class="return-btn" onclick="assignmentManager.returnToBase()">← RETURN TO BASE</button>
+            </div>
+        </header>
+        
+        <nav class="platform-nav">
+            <div class="container">
+                <button class="nav-btn active" data-filter="all">All Assignments</button>
+                <button class="nav-btn" data-filter="quick">Quick (5-20 min)</button>
+                <button class="nav-btn" data-filter="medium">Medium (Week-Month)</button>
+                <button class="nav-btn" data-filter="deep">Deep (Lifetime)</button>
+                <button class="nav-btn add-btn" id="addAssignmentBtn">+ Submit Assignment</button>
+            </div>
+        </nav>
+        
+        <main class="platform-main">
+            <div class="container">
+                <div class="stats-bar">
+                    <div class="stat">
+                        <span class="stat-number" id="totalAssignments">0</span>
+                        <span class="stat-label">Total Missions</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" id="totalAgents">0</span>
+                        <span class="stat-label">Active Agents</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" id="totalCompleted">0</span>
+                        <span class="stat-label">Completed</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" id="totalImpact">0</span>
+                        <span class="stat-label">Impact Score</span>
+                    </div>
+                </div>
+
+                <div id="assignmentGrid" class="assignment-grid">
+                    <!-- Assignments will be dynamically loaded here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add Assignment Modal -->
+    <div id="addModal" class="modal">
+        <div class="modal-content terminal-modal">
+            <span class="close">&times;</span>
+            <h2>SUBMIT NEW MISSION</h2>
+            <form id="assignmentForm">
+                <input type="text" id="assignmentTitle" placeholder="Mission Title" required>
+                <textarea id="assignmentDescription" placeholder="Mission Description..." required></textarea>
+                <input type="text" id="assignmentObjective" placeholder="Mission Objective (brief)" required>
+                
+                <select id="assignmentScale" required>
+                    <option value="">Select Duration Type</option>
+                    <option value="quick">Quick (5-20 minutes)</option>
+                    <option value="medium">Medium (Week to Month)</option>
+                    <option value="deep">Deep (Lifetime commitment)</option>
+                </select>
+                
+                <select id="assignmentClassification" required>
+                    <option value="">Select Classification</option>
+                    <option value="SOCIAL IMPACT">SOCIAL IMPACT</option>
+                    <option value="EDUCATION">EDUCATION</option>
+                    <option value="PLANET CARE">PLANET CARE</option>
+                    <option value="COMMUNITY BUILDING">COMMUNITY BUILDING</option>
+                    <option value="CULTURAL">CULTURAL</option>
+                    <option value="SPECIES ADVANCEMENT">SPECIES ADVANCEMENT</option>
+                </select>
+                
+                <select id="locationType">
+                    <option value="local">Local</option>
+                    <option value="regional">Regional</option>
+                    <option value="global">Global</option>
+                    <option value="virtual">Virtual</option>
+                </select>
+
+                <input type="text" id="assignmentTags" placeholder="Skills required (comma separated)">
+                
+                <div class="form-row">
+                    <input type="text" id="contributorName" placeholder="Commander Name (optional)">
+                    <input type="text" id="contributorLocation" placeholder="Base Location (optional)">
+                </div>
+
+                <button type="submit" class="submit-btn">SUBMIT MISSION</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- View Assignment Modal -->
+    <div id="viewModal" class="modal">
+        <div class="modal-content terminal-modal">
+            <span class="close">&times;</span>
+            <div id="assignmentDetails">
+                <!-- Assignment details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="data/assignments.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

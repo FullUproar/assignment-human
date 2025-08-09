@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Human</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: #00ff00;
+            height: 100vh;
+            overflow: hidden;
+            cursor: none;
+        }
+        
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #000 0%, #001100 50%, #000 100%);
+            z-index: 1000;
+            transition: opacity 1.5s ease;
+        }
+        
+        .splash-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .terminal-header {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: typewriter 3s ease forwards;
+            letter-spacing: 2px;
+        }
+        
+        .assignment-title {
+            font-size: 5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: typewriter 3s ease 1s forwards;
+            letter-spacing: 8px;
+            text-shadow: 0 0 20px #00ff00;
+        }
+        
+        .agent-info {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: typewriter 3s ease 2s forwards;
+            letter-spacing: 1px;
+        }
+        
+        .status-info {
+            font-size: 1.2rem;
+            margin-bottom: 60px;
+            opacity: 0;
+            animation: typewriter 3s ease 2.5s forwards;
+            color: #ffff00;
+        }
+        
+        .mission-prompt {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: typewriter 3s ease 3s forwards;
+            text-align: center;
+            max-width: 800px;
+        }
+        
+        .duration-selector {
+            display: flex;
+            gap: 30px;
+            opacity: 0;
+            animation: typewriter 3s ease 3.5s forwards;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .duration-btn {
+            padding: 20px 40px;
+            background: transparent;
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .duration-btn:hover {
+            background: #00ff00;
+            color: #000;
+            box-shadow: 0 0 30px #00ff00;
+            transform: scale(1.05);
+        }
+        
+        .duration-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,255,0,0.3), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .duration-btn:hover::before {
+            left: 100%;
+        }
+        
+        .assignment-reveal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1.5s ease;
+            z-index: 2000;
+            padding: 40px;
+        }
+        
+        .assignment-reveal.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .mission-header {
+            font-size: 1.5rem;
+            color: #ffff00;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .mission-header.animate {
+            animation: slideInFade 1.5s ease forwards;
+        }
+        
+        .assignment-content {
+            font-size: 2.2rem;
+            text-align: center;
+            max-width: 900px;
+            line-height: 1.4;
+            margin-bottom: 50px;
+            opacity: 0;
+            transform: translateY(30px);
+            border: 2px solid #00ff00;
+            padding: 40px;
+            background: rgba(0,255,0,0.05);
+        }
+        
+        .assignment-content.animate {
+            animation: slideInFade 1.5s ease 0.5s forwards;
+        }
+        
+        .mission-details {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 60px;
+            opacity: 0;
+            transform: translateY(20px);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .mission-details.animate {
+            animation: slideInFade 1.5s ease 1s forwards;
+        }
+        
+        .detail-item {
+            background: rgba(0,255,0,0.1);
+            border: 1px solid #00ff00;
+            padding: 15px 25px;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .action-controls {
+            display: flex;
+            gap: 30px;
+            opacity: 0;
+            transform: translateY(20px);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .action-controls.animate {
+            animation: slideInFade 1.5s ease 1.5s forwards;
+        }
+        
+        .control-btn {
+            padding: 18px 35px;
+            background: #00ff00;
+            color: #000;
+            border: none;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            box-shadow: 0 0 20px rgba(0,255,0,0.3);
+        }
+        
+        .control-btn:hover {
+            background: #ffff00;
+            box-shadow: 0 0 30px rgba(255,255,0,0.5);
+            transform: translateY(-3px);
+        }
+        
+        .control-btn.secondary {
+            background: transparent;
+            color: #00ff00;
+            border: 2px solid #00ff00;
+        }
+        
+        .control-btn.secondary:hover {
+            background: #00ff00;
+            color: #000;
+        }
+        
+        .platform-view {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #001100 0%, #002200 50%, #000 100%);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1.5s ease;
+            z-index: 500;
+            overflow-y: auto;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+        
+        .platform-view.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .cursor-cross {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            pointer-events: none;
+            z-index: 10000;
+        }
+        
+        .cursor-cross::before,
+        .cursor-cross::after {
+            content: '';
+            position: absolute;
+            background: #00ff00;
+        }
+        
+        .cursor-cross::before {
+            width: 20px;
+            height: 2px;
+            top: 9px;
+            left: 0;
+        }
+        
+        .cursor-cross::after {
+            width: 2px;
+            height: 20px;
+            top: 0;
+            left: 9px;
+        }
+        
+        .glitch {
+            animation: glitch 0.3s infinite;
+        }
+        
+        @keyframes typewriter {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInFade {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+        
+        .scanning-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ff00, transparent);
+            animation: scan 3s linear infinite;
+        }
+        
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+        
+        @media (max-width: 768px) {
+            .assignment-title { font-size: 3rem; letter-spacing: 4px; }
+            .mission-prompt { font-size: 1.5rem; padding: 0 20px; }
+            .duration-selector { flex-direction: column; align-items: center; }
+            .duration-btn { width: 250px; }
+            .assignment-content { font-size: 1.6rem; padding: 20px; }
+            .mission-details { flex-direction: column; align-items: center; }
+            .action-controls { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor-cross"></div>
+    <div class="scanning-line"></div>
+    
+    <div class="splash-screen" id="splashScreen">
+        <div class="terminal-header">SECURE CONNECTION ESTABLISHED</div>
+        <h1 class="assignment-title">ASSIGNMENT HUMAN</h1>
+        <div class="agent-info">AGENT: CHICAGO, ILLINOIS</div>
+        <div class="status-info">STATUS: AWAITING ORDERS</div>
+        <div class="mission-prompt">Ready for your assignment?</div>
+        
+        <div class="duration-selector">
+            <button class="duration-btn" onclick="getMission('quick')">5 Minutes</button>
+            <button class="duration-btn" onclick="getMission('medium')">This Week</button>
+            <button class="duration-btn" onclick="getMission('deep')">This Lifetime</button>
+            <button class="duration-btn" onclick="getMission('random')">Surprise Me</button>
+        </div>
+    </div>
+    
+    <div class="assignment-reveal" id="assignmentReveal">
+        <div class="mission-header" id="missionHeader">MISSION BRIEFING</div>
+        <div class="assignment-content" id="assignmentContent"></div>
+        <div class="mission-details" id="missionDetails"></div>
+        <div class="action-controls">
+            <button class="control-btn" onclick="acceptMission()">Accept Mission</button>
+            <button class="control-btn secondary" onclick="requestNewMission()">Request New Mission</button>
+            <button class="control-btn secondary" onclick="accessFullSystem()">Access Full System</button>
+        </div>
+    </div>
+    
+    <div class="platform-view" id="platformView">
+        <div style="padding: 100px; text-align: center;">
+            <h2 style="font-size: 3rem; margin-bottom: 30px; color: #00ff00;">ASSIGNMENT HUMAN COMMAND CENTER</h2>
+            <p style="font-size: 1.2rem; opacity: 0.8; margin-bottom: 40px;">Full platform interface loading...</p>
+            <button style="padding: 15px 30px; background: #00ff00; color: #000; border: none; font-size: 1rem; cursor: pointer; font-family: 'Courier New', monospace; font-weight: bold;" onclick="returnToBase()">← RETURN TO BASE</button>
+        </div>
+    </div>
+
+    <script>
+        const missions = {
+            quick: [
+                {
+                    text: "Leave a handwritten note of encouragement in a public place where someone will find it today.",
+                    objective: "Deploy micro-positivity",
+                    duration: "5 minutes",
+                    classification: "SOCIAL IMPACT"
+                },
+                {
+                    text: "Research one fact about renewable energy and share it with someone who doesn't know it.",
+                    objective: "Spread critical knowledge",
+                    duration: "10 minutes", 
+                    classification: "EDUCATION"
+                },
+                {
+                    text: "Pick up 10 pieces of trash that aren't yours and dispose of them properly.",
+                    objective: "Environmental restoration",
+                    duration: "5 minutes",
+                    classification: "PLANET CARE"
+                }
+            ],
+            medium: [
+                {
+                    text: "Document a local business owner's story and share it to help their community visibility.",
+                    objective: "Economic ecosystem support",
+                    duration: "3-5 days",
+                    classification: "COMMUNITY BUILDING"
+                },
+                {
+                    text: "Teach one person a valuable skill you possess through a hands-on session this week.",
+                    objective: "Knowledge transfer protocol",
+                    duration: "One week",
+                    classification: "SKILL DISTRIBUTION"
+                },
+                {
+                    text: "Connect two people in your network who should collaborate but don't know each other.",
+                    objective: "Network amplification",
+                    duration: "This week",
+                    classification: "SOCIAL ENGINEERING"
+                }
+            ],
+            deep: [
+                {
+                    text: "Design a comprehensive plan for your neighborhood to become carbon neutral within 5 years.",
+                    objective: "Climate intervention system",
+                    duration: "Multi-year project",
+                    classification: "PLANETARY DEFENSE"
+                },
+                {
+                    text: "Create an open-source educational resource that preserves important knowledge for future generations.",
+                    objective: "Knowledge preservation protocol",
+                    duration: "Ongoing mission",
+                    classification: "SPECIES CONTINUITY"
+                },
+                {
+                    text: "Research and develop a solution for sustainable space exploration that doesn't harm Earth's environment.",
+                    objective: "Expansion without destruction",
+                    duration: "Lifetime commitment",
+                    classification: "SPECIES ADVANCEMENT"
+                }
+            ]
+        };
+        
+        let currentMission = null;
+        
+        // Custom cursor tracking
+        document.addEventListener('mousemove', (e) => {
+            const cursor = document.querySelector('.cursor-cross');
+            cursor.style.left = e.clientX - 10 + 'px';
+            cursor.style.top = e.clientY - 10 + 'px';
+        });
+        
+        // Add random glitch effect
+        setInterval(() => {
+            const elements = document.querySelectorAll('.assignment-title, .terminal-header');
+            elements.forEach(el => {
+                if (Math.random() < 0.1) {
+                    el.classList.add('glitch');
+                    setTimeout(() => el.classList.remove('glitch'), 300);
+                }
+            });
+        }, 2000);
+        
+        function getMission(type) {
+            const splash = document.getElementById('splashScreen');
+            const reveal = document.getElementById('assignmentReveal');
+            
+            splash.classList.add('hidden');
+            
+            setTimeout(() => {
+                let missionPool;
+                
+                if (type === 'random') {
+                    const allMissions = [...missions.quick, ...missions.medium, ...missions.deep];
+                    missionPool = allMissions;
+                } else {
+                    missionPool = missions[type];
+                }
+                
+                currentMission = missionPool[Math.floor(Math.random() * missionPool.length)];
+                
+                reveal.classList.add('show');
+                displayMission();
+            }, 1500);
+        }
+        
+        function displayMission() {
+            const headerEl = document.getElementById('missionHeader');
+            const contentEl = document.getElementById('assignmentContent');
+            const detailsEl = document.getElementById('missionDetails');
+            
+            headerEl.textContent = `MISSION BRIEFING - ${currentMission.classification}`;
+            contentEl.textContent = currentMission.text;
+            detailsEl.innerHTML = `
+                <div class="detail-item">OBJECTIVE: ${currentMission.objective}</div>
+                <div class="detail-item">DURATION: ${currentMission.duration}</div>
+                <div class="detail-item">CLEARANCE: UNCLASSIFIED</div>
+            `;
+            
+            setTimeout(() => headerEl.classList.add('animate'), 200);
+            setTimeout(() => contentEl.classList.add('animate'), 700);
+            setTimeout(() => detailsEl.classList.add('animate'), 1200);
+            setTimeout(() => document.querySelector('.action-controls').classList.add('animate'), 1700);
+        }
+        
+        function acceptMission() {
+            alert('MISSION ACCEPTED. Connecting to support systems and fellow agents...');
+        }
+        
+        function requestNewMission() {
+            const reveal = document.getElementById('assignmentReveal');
+            reveal.classList.remove('show');
+            
+            setTimeout(() => {
+                const splash = document.getElementById('splashScreen');
+                splash.classList.remove('hidden');
+                resetAnimations();
+            }, 1500);
+        }
+        
+        function accessFullSystem() {
+            const reveal = document.getElementById('assignmentReveal');
+            const platform = document.getElementById('platformView');
+            
+            reveal.classList.remove('show');
+            setTimeout(() => platform.classList.add('show'), 1500);
+        }
+        
+        function returnToBase() {
+            const platform = document.getElementById('platformView');
+            const splash = document.getElementById('splashScreen');
+            
+            platform.classList.remove('show');
+            setTimeout(() => {
+                splash.classList.remove('hidden');
+                resetAnimations();
+            }, 1500);
+        }
+        
+        function resetAnimations() {
+            document.getElementById('missionHeader').classList.remove('animate');
+            document.getElementById('assignmentContent').classList.remove('animate');
+            document.getElementById('missionDetails').classList.remove('animate');
+            document.querySelector('.action-controls').classList.remove('animate');
+        }
+    </script>
+</body>
+</html>

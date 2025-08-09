@@ -1,0 +1,447 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #4a90e2;
+    --secondary-color: #7ed321;
+    --accent-color: #f5a623;
+    --text-dark: #333;
+    --text-light: #666;
+    --bg-light: #f8f9fa;
+    --bg-white: #ffffff;
+    --shadow: 0 2px 10px rgba(0,0,0,0.1);
+    --shadow-hover: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+header {
+    background: var(--bg-white);
+    padding: 2rem 0;
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+}
+
+header h1 {
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.tagline {
+    color: var(--text-light);
+    font-size: 1.2rem;
+    font-style: italic;
+}
+
+nav {
+    background: var(--bg-white);
+    padding: 1rem 0;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow);
+}
+
+nav .container {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.nav-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    background: var(--bg-light);
+    color: var(--text-dark);
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.nav-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.nav-btn.active {
+    background: var(--primary-color);
+    color: white;
+}
+
+.add-btn {
+    background: var(--secondary-color);
+    color: white;
+    margin-left: auto;
+}
+
+.add-btn:hover {
+    background: #6bc01c;
+}
+
+.stats-bar {
+    background: var(--bg-white);
+    padding: 1.5rem;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow);
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.stat-label {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.assignment-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.assignment-card {
+    background: var(--bg-white);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.assignment-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
+.assignment-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--primary-color);
+}
+
+.assignment-card.micro::before {
+    background: var(--secondary-color);
+}
+
+.assignment-card.project::before {
+    background: var(--primary-color);
+}
+
+.assignment-card.dream::before {
+    background: var(--accent-color);
+}
+
+.assignment-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+}
+
+.assignment-scale {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.scale-micro {
+    background: rgba(126, 211, 33, 0.2);
+    color: #5ba014;
+}
+
+.scale-project {
+    background: rgba(74, 144, 226, 0.2);
+    color: #2c6fb8;
+}
+
+.scale-dream {
+    background: rgba(245, 166, 35, 0.2);
+    color: #c47d00;
+}
+
+.assignment-description {
+    color: var(--text-light);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.assignment-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+}
+
+.contributor-info {
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.assignment-stats {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.9rem;
+}
+
+.assignment-stats span {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: var(--text-light);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background-color: var(--bg-white);
+    margin: 5% auto;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    animation: slideIn 0.3s;
+}
+
+@keyframes slideIn {
+    from { 
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to { 
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #000;
+}
+
+.modal h2 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+#assignmentForm input,
+#assignmentForm textarea,
+#assignmentForm select {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+#assignmentForm textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.submit-btn {
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.submit-btn:hover {
+    background: #6bc01c;
+    transform: translateY(-2px);
+}
+
+.contribute-section {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid #eee;
+}
+
+.contribute-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 1rem;
+}
+
+.contribute-btn:hover {
+    background: #3a7bc8;
+    transform: translateY(-2px);
+}
+
+.contribution-form {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--bg-light);
+    border-radius: 5px;
+}
+
+.contribution-form textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    min-height: 100px;
+}
+
+.contributions-list {
+    margin-top: 1.5rem;
+}
+
+.contribution-item {
+    background: var(--bg-light);
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.contribution-author {
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.contribution-text {
+    color: var(--text-dark);
+    line-height: 1.5;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+.tag {
+    background: var(--bg-light);
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+footer {
+    background: var(--bg-white);
+    padding: 2rem 0;
+    text-align: center;
+    margin-top: 3rem;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+}
+
+footer p {
+    color: var(--text-light);
+    font-style: italic;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    background: var(--bg-white);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+}
+
+.empty-state h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.empty-state p {
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .assignment-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .stats-bar {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}

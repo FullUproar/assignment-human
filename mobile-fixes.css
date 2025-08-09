@@ -1,0 +1,407 @@
+/* Mobile Responsive Fixes for Assignment Human */
+
+/* Fix user status bar on mobile */
+@media (max-width: 768px) {
+    .user-status-bar {
+        position: fixed !important;
+        top: 0 !important;
+        right: 0 !important;
+        left: auto !important;
+        padding: 0.5rem !important;
+        font-size: 0.7rem !important;
+        max-width: 150px !important;
+        z-index: 9999 !important;
+        background: rgba(0,0,0,0.95) !important;
+    }
+    
+    #userStatus {
+        font-size: 0.7rem !important;
+    }
+    
+    #userDisplay {
+        display: block !important;
+        margin-bottom: 0.25rem !important;
+    }
+}
+
+/* Fix main title on mobile */
+@media (max-width: 768px) {
+    .assignment-title {
+        font-size: 2rem !important; /* Much smaller on mobile */
+        letter-spacing: 2px !important; /* Less spacing */
+        padding: 0 1rem !important; /* Add padding */
+        word-break: break-word !important;
+        line-height: 1.2 !important;
+    }
+    
+    .terminal-header {
+        font-size: 0.9rem !important;
+        padding: 0 1rem !important;
+    }
+    
+    .agent-info {
+        font-size: 1rem !important;
+        padding: 0 1rem !important;
+    }
+    
+    .status-info {
+        font-size: 1rem !important;
+        padding: 0 1rem !important;
+    }
+    
+    .mission-prompt {
+        font-size: 1.2rem !important;
+        padding: 0 1rem !important;
+    }
+}
+
+/* Fix splash screen layout on mobile */
+@media (max-width: 768px) {
+    .splash-screen {
+        padding: 1rem !important;
+        padding-top: 4rem !important; /* Space for status bar */
+    }
+    
+    /* Stack duration buttons vertically on mobile */
+    .duration-selector {
+        flex-direction: column !important;
+        align-items: center !important;
+        width: 100% !important;
+        padding: 0 1rem !important;
+    }
+    
+    .duration-btn {
+        width: 90% !important;
+        max-width: 280px !important;
+        padding: 15px 20px !important;
+        font-size: 0.9rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    /* Command options section */
+    .splash-screen > div:last-child {
+        padding: 1rem !important;
+    }
+    
+    .splash-screen > div:last-child > div {
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+    
+    .splash-screen > div:last-child .duration-btn {
+        width: 90% !important;
+        max-width: 280px !important;
+    }
+}
+
+/* Fix assignment reveal on mobile */
+@media (max-width: 768px) {
+    .assignment-reveal {
+        padding: 1rem !important;
+        padding-top: 4rem !important;
+    }
+    
+    .mission-header {
+        font-size: 1.2rem !important;
+    }
+    
+    .assignment-content {
+        font-size: 1.2rem !important;
+        padding: 1.5rem !important;
+        margin: 0 0.5rem !important;
+    }
+    
+    .mission-details {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        padding: 0 1rem !important;
+    }
+    
+    .detail-item {
+        margin-bottom: 0.5rem !important;
+        font-size: 0.8rem !important;
+        padding: 0.75rem !important;
+    }
+    
+    .action-controls {
+        flex-direction: column !important;
+        align-items: center !important;
+        padding: 0 1rem !important;
+    }
+    
+    .control-btn {
+        width: 90% !important;
+        max-width: 280px !important;
+        margin-bottom: 0.5rem !important;
+        font-size: 0.9rem !important;
+        padding: 15px 20px !important;
+    }
+}
+
+/* Fix platform view on mobile */
+@media (max-width: 768px) {
+    .platform-header {
+        padding: 1rem 0 !important;
+        margin-top: 3rem !important; /* Space for status bar */
+    }
+    
+    .platform-header h1 {
+        font-size: 1.5rem !important;
+        padding: 0 1rem !important;
+    }
+    
+    .return-btn {
+        font-size: 0.8rem !important;
+        padding: 0.5rem 1rem !important;
+        margin-top: 0.5rem !important;
+        float: none !important;
+    }
+    
+    .platform-nav {
+        padding: 0.5rem 0 !important;
+    }
+    
+    .platform-nav .container {
+        flex-direction: column !important;
+        padding: 0 0.5rem !important;
+    }
+    
+    .nav-btn {
+        width: 100% !important;
+        margin-bottom: 0.5rem !important;
+        font-size: 0.8rem !important;
+        padding: 0.75rem !important;
+    }
+    
+    .stats-bar {
+        flex-direction: column !important;
+        padding: 1rem !important;
+    }
+    
+    .stat {
+        margin-bottom: 1rem !important;
+    }
+    
+    .assignment-grid {
+        grid-template-columns: 1fr !important;
+        padding: 0 0.5rem !important;
+    }
+    
+    .assignment-card {
+        padding: 1rem !important;
+    }
+    
+    .assignment-title {
+        font-size: 1.1rem !important;
+    }
+}
+
+/* Fix modals on mobile */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95% !important;
+        margin: 2% auto !important;
+        padding: 1rem !important;
+        max-height: 90vh !important;
+    }
+    
+    .terminal-modal h2 {
+        font-size: 1.3rem !important;
+    }
+    
+    #assignmentForm input,
+    #assignmentForm textarea,
+    #assignmentForm select {
+        font-size: 16px !important; /* Prevents zoom on iOS */
+        padding: 0.75rem !important;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* Auth page mobile fixes */
+@media (max-width: 768px) {
+    .auth-container {
+        margin: 20px auto !important;
+        padding: 1rem !important;
+        width: 90% !important;
+        margin-top: 4rem !important;
+    }
+    
+    .auth-header h1 {
+        font-size: 1.5rem !important;
+    }
+    
+    .auth-tabs {
+        flex-direction: row !important;
+        gap: 0.5rem !important;
+    }
+    
+    .auth-tab {
+        padding: 0.5rem !important;
+        font-size: 0.9rem !important;
+    }
+    
+    .form-group input {
+        font-size: 16px !important; /* Prevents zoom on iOS */
+    }
+    
+    .auth-button {
+        font-size: 0.9rem !important;
+        padding: 0.75rem !important;
+    }
+    
+    .agent-dashboard {
+        padding: 1rem !important;
+        margin-top: 3rem !important;
+    }
+    
+    .agent-info {
+        padding: 1rem !important;
+    }
+    
+    .agent-stats {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.5rem !important;
+    }
+    
+    .stat-card {
+        padding: 0.75rem !important;
+    }
+    
+    .stat-value {
+        font-size: 1.5rem !important;
+    }
+}
+
+/* Create page mobile fixes */
+@media (max-width: 768px) {
+    .command-center {
+        margin: 20px auto !important;
+        padding: 1rem !important;
+    }
+    
+    .command-header {
+        padding: 1rem !important;
+        margin-top: 2rem !important;
+    }
+    
+    .command-header h1 {
+        font-size: 1.8rem !important;
+    }
+    
+    .command-header > div {
+        flex-direction: column !important;
+    }
+    
+    .command-header a {
+        margin-bottom: 0.5rem !important;
+        display: block !important;
+        text-align: center !important;
+    }
+    
+    .creation-tabs {
+        flex-direction: column !important;
+        padding: 0.5rem !important;
+    }
+    
+    .creation-tab {
+        width: 100% !important;
+        padding: 0.75rem !important;
+        font-size: 0.9rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    .creation-form {
+        padding: 1rem !important;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 16px !important; /* Prevents zoom on iOS */
+    }
+    
+    .skill-tags {
+        padding: 0 0.5rem !important;
+    }
+    
+    .skill-tag {
+        font-size: 0.8rem !important;
+        padding: 0.5rem !important;
+        margin: 0.25rem !important;
+    }
+    
+    .submit-section {
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+    
+    .submit-btn,
+    .cancel-btn {
+        width: 100% !important;
+        max-width: 280px !important;
+        margin-bottom: 0.5rem !important;
+        font-size: 0.9rem !important;
+        padding: 0.75rem !important;
+    }
+}
+
+/* Prevent horizontal scroll on mobile */
+@media (max-width: 768px) {
+    body {
+        overflow-x: hidden !important;
+    }
+    
+    .scanning-line {
+        display: none !important; /* Hide on mobile to prevent overflow */
+    }
+    
+    .cursor-cross {
+        display: none !important; /* Hide custom cursor on mobile */
+    }
+}
+
+/* Landscape mobile adjustments */
+@media (max-width: 768px) and (orientation: landscape) {
+    .assignment-title {
+        font-size: 1.8rem !important;
+    }
+    
+    .splash-screen {
+        padding-top: 2rem !important;
+    }
+    
+    .duration-selector {
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+    }
+    
+    .duration-btn {
+        width: 45% !important;
+    }
+}
+
+/* Very small screens (< 375px) */
+@media (max-width: 375px) {
+    .assignment-title {
+        font-size: 1.5rem !important;
+        letter-spacing: 1px !important;
+    }
+    
+    .user-status-bar {
+        font-size: 0.6rem !important;
+        padding: 0.25rem !important;
+    }
+    
+    .duration-btn {
+        font-size: 0.8rem !important;
+        padding: 12px 15px !important;
+    }
+}

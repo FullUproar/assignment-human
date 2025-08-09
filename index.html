@@ -16,24 +16,24 @@
         <h1 class="assignment-title">ASSIGNMENT HUMAN</h1>
         <div class="agent-info" id="agentInfo">AGENT: INITIALIZING...</div>
         <div class="status-info">STATUS: AWAITING ORDERS</div>
-        <div class="mission-prompt">Ready for your assignment?</div>
+        <div class="mission-prompt">Ready for your assignment, Agent?</div>
         
         <div class="duration-selector">
-            <button class="duration-btn" onclick="assignmentManager.getMission('quick')">5 Minutes</button>
-            <button class="duration-btn" onclick="assignmentManager.getMission('medium')">This Week</button>
-            <button class="duration-btn" onclick="assignmentManager.getMission('deep')">This Lifetime</button>
-            <button class="duration-btn" onclick="assignmentManager.getMission('random')">Surprise Me</button>
+            <button class="duration-btn" onclick="assignmentManager.getAssignment('quick')">5 Minutes</button>
+            <button class="duration-btn" onclick="assignmentManager.getAssignment('medium')">This Week</button>
+            <button class="duration-btn" onclick="assignmentManager.getAssignment('deep')">This Lifetime</button>
+            <button class="duration-btn" onclick="assignmentManager.getAssignment('random')">Surprise Me</button>
         </div>
     </div>
 
     <!-- Assignment Reveal Screen -->
     <div class="assignment-reveal" id="assignmentReveal">
-        <div class="mission-header" id="missionHeader">MISSION BRIEFING</div>
+        <div class="mission-header" id="missionHeader">ASSIGNMENT BRIEFING</div>
         <div class="assignment-content" id="assignmentContent"></div>
         <div class="mission-details" id="missionDetails"></div>
         <div class="action-controls">
-            <button class="control-btn" onclick="assignmentManager.acceptMission()">Accept Mission</button>
-            <button class="control-btn secondary" onclick="assignmentManager.requestNewMission()">Request New Mission</button>
+            <button class="control-btn" onclick="assignmentManager.acceptMission()">Accept Assignment</button>
+            <button class="control-btn secondary" onclick="assignmentManager.requestNewAssignment()">Request New Assignment</button>
             <button class="control-btn secondary" onclick="assignmentManager.accessFullSystem()">Access Full System</button>
         </div>
     </div>
@@ -62,7 +62,7 @@
                 <div class="stats-bar">
                     <div class="stat">
                         <span class="stat-number" id="totalAssignments">0</span>
-                        <span class="stat-label">Total Missions</span>
+                        <span class="stat-label">Total Assignments</span>
                     </div>
                     <div class="stat">
                         <span class="stat-number" id="totalAgents">0</span>
@@ -89,11 +89,11 @@
     <div id="addModal" class="modal">
         <div class="modal-content terminal-modal">
             <span class="close">&times;</span>
-            <h2>SUBMIT NEW MISSION</h2>
+            <h2>SUBMIT NEW ASSIGNMENT</h2>
             <form id="assignmentForm">
-                <input type="text" id="assignmentTitle" placeholder="Mission Title" required>
-                <textarea id="assignmentDescription" placeholder="Mission Description..." required></textarea>
-                <input type="text" id="assignmentObjective" placeholder="Mission Objective (brief)" required>
+                <input type="text" id="assignmentTitle" placeholder="Assignment Title" required>
+                <textarea id="assignmentDescription" placeholder="Assignment Description..." required></textarea>
+                <input type="text" id="assignmentObjective" placeholder="Assignment Objective (brief)" required>
                 
                 <select id="assignmentScale" required>
                     <option value="">Select Duration Type</option>
@@ -126,7 +126,7 @@
                     <input type="text" id="contributorLocation" placeholder="Base Location (optional)">
                 </div>
 
-                <button type="submit" class="submit-btn">SUBMIT MISSION</button>
+                <button type="submit" class="submit-btn">SUBMIT ASSIGNMENT</button>
             </form>
         </div>
     </div>

@@ -1,11 +1,19 @@
 # Assignment Human - Implementation Roadmap
 
-## Current Status: MVP Prototype Complete ✓
+## Current Status: MVP Live on assignmenthuman.com ✓
 - Terminal UI with animations and effects
 - Assignment generation system
 - Local storage persistence
 - 30+ seed assignments
-- Geolocation detection
+- Geolocation detection (fixed with ipbase API)
+- Deployed on Vercel with custom domain
+
+## Nomenclature
+See [NOMENCLATURE.md](./NOMENCLATURE.md) for official terminology:
+- **Assignment**: Individual task given to agents
+- **Mission**: Collection of related assignments
+- **Agent**: Platform users
+- **Objective**: Specific measurable outcome
 
 ## Phase 1: Backend Infrastructure (Week 1-2)
 

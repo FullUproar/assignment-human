@@ -129,7 +129,7 @@ class AssignmentManager {
         }
     }
 
-    getMission(type) {
+    getAssignment(type) {
         const splash = document.getElementById('splashScreen');
         const reveal = document.getElementById('assignmentReveal');
         
@@ -155,20 +155,20 @@ class AssignmentManager {
             
             if (this.currentMission) {
                 reveal.classList.add('show');
-                this.displayMission();
+                this.displayAssignment();
             } else {
-                alert('No missions available for your parameters. Try a different duration.');
-                this.requestNewMission();
+                alert('No assignments available for your parameters. Try a different duration.');
+                this.requestNewAssignment();
             }
         }, 1500);
     }
 
-    displayMission() {
+    displayAssignment() {
         const headerEl = document.getElementById('missionHeader');
         const contentEl = document.getElementById('assignmentContent');
         const detailsEl = document.getElementById('missionDetails');
         
-        headerEl.textContent = `MISSION BRIEFING - ${this.currentMission.classification}`;
+        headerEl.textContent = `ASSIGNMENT BRIEFING - ${this.currentMission.classification}`;
         contentEl.textContent = this.currentMission.description;
         
         const durationText = this.currentMission.duration || this.getDurationText(this.currentMission.scale);
@@ -206,11 +206,11 @@ class AssignmentManager {
                 this.saveAssignments();
             }
             
-            alert(`MISSION ACCEPTED\n\nMission ID: ${this.currentMission.id}\nClassification: ${this.currentMission.classification}\n\nConnecting to support systems and fellow agents...`);
+            alert(`ASSIGNMENT ACCEPTED\n\nAssignment ID: ${this.currentMission.id}\nClassification: ${this.currentMission.classification}\n\nConnecting to support systems and fellow agents...`);
         }
     }
 
-    requestNewMission() {
+    requestNewAssignment() {
         const reveal = document.getElementById('assignmentReveal');
         reveal.classList.remove('show');
         
@@ -341,7 +341,7 @@ class AssignmentManager {
 
             <div class="action-controls" style="position: static; opacity: 1; transform: none; margin-top: 2rem;">
                 <button class="control-btn" onclick="assignmentManager.joinMission('${id}')">
-                    JOIN MISSION
+                    JOIN ASSIGNMENT
                 </button>
                 <button class="control-btn secondary" onclick="assignmentManager.markCompleted('${id}')">
                     MARK COMPLETED
@@ -359,7 +359,7 @@ class AssignmentManager {
             this.saveAssignments();
             this.viewAssignment(id);
             this.updateStats();
-            alert('MISSION JOINED\n\nYou are now an active agent on this mission.');
+            alert('ASSIGNMENT JOINED\n\nYou are now an active agent on this assignment.');
         }
     }
 
@@ -370,7 +370,7 @@ class AssignmentManager {
             this.saveAssignments();
             this.viewAssignment(id);
             this.updateStats();
-            alert('MISSION COMPLETION RECORDED\n\nThank you for your service, Agent.');
+            alert('ASSIGNMENT COMPLETION RECORDED\n\nThank you for your service, Agent.');
         }
     }
 
@@ -413,7 +413,7 @@ class AssignmentManager {
         this.renderAssignments();
         this.updateStats();
         
-        alert('MISSION SUBMITTED\n\nYour mission has been added to the global assignment database.');
+        alert('ASSIGNMENT SUBMITTED\n\nYour assignment has been added to the global database.');
     }
 
     updateStats() {

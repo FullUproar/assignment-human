@@ -10,6 +10,14 @@
     <div class="cursor-cross"></div>
     <div class="scanning-line"></div>
 
+    <!-- User Status Bar -->
+    <div class="user-status-bar" id="userStatusBar" style="position: fixed; top: 0; right: 0; padding: 1rem; z-index: 9999; background: rgba(0,0,0,0.9); border: 1px solid var(--terminal-green); border-top: none; border-right: none;">
+        <div id="userStatus" style="color: var(--terminal-green); font-family: var(--font-mono); font-size: 0.9rem;">
+            <span id="userDisplay">GUEST MODE</span> | 
+            <a href="auth.html" style="color: var(--warning-yellow); text-decoration: none;">LOGIN</a>
+        </div>
+    </div>
+
     <!-- Terminal Splash Screen -->
     <div class="splash-screen" id="splashScreen">
         <div class="terminal-header">SECURE CONNECTION ESTABLISHED</div>
@@ -149,7 +157,23 @@
     
     <!-- Local Data and Scripts -->
     <script src="data/assignments.js"></script>
-    <script src="lib/supabase.js"></script>
+    <script src="lib/supabase-enhanced.js"></script>
     <script src="script.js"></script>
+    
+    <!-- Initialize User Status -->
+    <script>
+        window.addEventListener('DOMContentLoaded', async () => {
+            // Initialize Supabase
+            await AssignmentHumanDB.init();
+            
+            // Update user status display
+            if (AssignmentHumanDB.currentUser) {
+                const agent = AssignmentHumanDB.currentAgent;
+                document.getElementById('userDisplay').innerHTML = 
+                    `AGENT: ${agent?.username || 'Anonymous'} | POINTS: ${agent?.points || 0}`;
+                document.querySelector('#userStatus a').textContent = 'DASHBOARD';
+            }
+        });
+    </script>
 </body>
 </html>

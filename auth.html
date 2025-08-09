@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Human - Agent Portal</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Auth specific styles */
+        .auth-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 2rem;
+            background: rgba(0,0,0,0.9);
+            border: 2px solid var(--terminal-green);
+            box-shadow: 0 0 40px var(--terminal-green);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-header h1 {
+            color: var(--terminal-green);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px var(--terminal-green);
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 0.75rem;
+            background: transparent;
+            border: 1px solid var(--terminal-green);
+            color: var(--terminal-green);
+            font-family: var(--font-mono);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .auth-tab.active {
+            background: var(--terminal-green);
+            color: var(--deep-black);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--terminal-green);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(0,255,0,0.05);
+            border: 1px solid var(--terminal-green);
+            color: var(--terminal-green);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            box-shadow: 0 0 10px var(--terminal-green);
+        }
+
+        .auth-button {
+            width: 100%;
+            padding: 1rem;
+            background: var(--terminal-green);
+            color: var(--deep-black);
+            border: none;
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+        }
+
+        .auth-button:hover {
+            background: var(--warning-yellow);
+            box-shadow: 0 0 30px var(--warning-yellow);
+        }
+
+        .auth-message {
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 1px solid var(--terminal-green);
+            background: rgba(0,255,0,0.1);
+            text-align: center;
+        }
+
+        .auth-message.error {
+            border-color: #ff0000;
+            background: rgba(255,0,0,0.1);
+            color: #ff0000;
+        }
+
+        .anonymous-option {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0,255,0,0.3);
+            text-align: center;
+        }
+
+        .anonymous-option p {
+            color: rgba(0,255,0,0.7);
+            margin-bottom: 1rem;
+        }
+
+        .agent-dashboard {
+            display: none;
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 2rem;
+        }
+
+        .agent-dashboard.active {
+            display: block;
+        }
+
+        .agent-info {
+            background: rgba(0,0,0,0.9);
+            border: 2px solid var(--terminal-green);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .agent-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-card {
+            background: rgba(0,255,0,0.05);
+            border: 1px solid var(--terminal-green);
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            color: var(--warning-yellow);
+            font-weight: bold;
+        }
+
+        .stat-label {
+            color: var(--terminal-green);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .progress-list {
+            background: rgba(0,0,0,0.9);
+            border: 1px solid var(--terminal-green);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .progress-item {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: rgba(0,255,0,0.05);
+            border: 1px solid var(--terminal-green);
+        }
+
+        .progress-item h3 {
+            color: var(--terminal-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(0,255,0,0.2);
+            border: 1px solid var(--terminal-green);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .progress-status.completed {
+            background: rgba(0,255,0,0.3);
+            color: var(--terminal-green);
+        }
+
+        .progress-status.accepted {
+            background: rgba(255,255,0,0.2);
+            color: var(--warning-yellow);
+            border-color: var(--warning-yellow);
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor-cross"></div>
+    <div class="scanning-line"></div>
+
+    <!-- Auth Container -->
+    <div class="auth-container" id="authContainer">
+        <div class="auth-header">
+            <h1>AGENT AUTHENTICATION</h1>
+            <p style="color: var(--warning-yellow);">SECURE ACCESS REQUIRED</p>
+        </div>
+
+        <div class="auth-tabs">
+            <button class="auth-tab active" onclick="switchTab('login')">LOGIN</button>
+            <button class="auth-tab" onclick="switchTab('signup')">REGISTER</button>
+        </div>
+
+        <!-- Login Form -->
+        <form class="auth-form active" id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label>Agent Email</label>
+                <input type="email" name="email" required placeholder="agent@example.com">
+            </div>
+            <div class="form-group">
+                <label>Security Code</label>
+                <input type="password" name="password" required placeholder="••••••••">
+            </div>
+            <button type="submit" class="auth-button">AUTHENTICATE</button>
+        </form>
+
+        <!-- Signup Form -->
+        <form class="auth-form" id="signupForm" onsubmit="handleSignup(event)">
+            <div class="form-group">
+                <label>Agent Username</label>
+                <input type="text" name="username" required placeholder="Agent_Name">
+            </div>
+            <div class="form-group">
+                <label>Secure Email</label>
+                <input type="email" name="email" required placeholder="agent@example.com">
+            </div>
+            <div class="form-group">
+                <label>Security Code</label>
+                <input type="password" name="password" required placeholder="Min 6 characters">
+            </div>
+            <button type="submit" class="auth-button">INITIALIZE AGENT</button>
+        </form>
+
+        <div id="authMessage"></div>
+
+        <div class="anonymous-option">
+            <p>No credentials? Start anonymously:</p>
+            <button class="auth-button" onclick="handleAnonymous()">
+                DEPLOY AS ANONYMOUS AGENT
+            </button>
+        </div>
+    </div>
+
+    <!-- Agent Dashboard (shown after login) -->
+    <div class="agent-dashboard" id="agentDashboard">
+        <div class="agent-info">
+            <h2 style="color: var(--terminal-green); margin-bottom: 1rem;">
+                AGENT PROFILE
+            </h2>
+            <div id="agentDetails">
+                <p>USERNAME: <span id="agentUsername" style="color: var(--warning-yellow);"></span></p>
+                <p>RANK: <span id="agentRank" style="color: var(--warning-yellow);"></span></p>
+                <p>AGENT ID: <span id="agentId" style="color: var(--warning-yellow);"></span></p>
+            </div>
+            
+            <div class="agent-stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="agentPoints">0</div>
+                    <div class="stat-label">Points Earned</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="assignmentsCompleted">0</div>
+                    <div class="stat-label">Assignments Completed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="currentStreak">0</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="teamsJoined">0</div>
+                    <div class="stat-label">Teams Joined</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-list">
+            <h2 style="color: var(--terminal-green); margin-bottom: 1.5rem;">
+                ACTIVE ASSIGNMENTS
+            </h2>
+            <div id="progressList">
+                <!-- Progress items will be loaded here -->
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <button class="auth-button" onclick="goToMain()" style="width: auto; padding: 1rem 2rem;">
+                ACCESS MAIN TERMINAL
+            </button>
+            <button class="auth-button" onclick="handleLogout()" style="width: auto; padding: 1rem 2rem; margin-left: 1rem; background: transparent; border: 2px solid var(--terminal-green); color: var(--terminal-green);">
+                LOGOUT
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="lib/supabase-enhanced.js"></script>
+    <script>
+        // Initialize
+        window.addEventListener('DOMContentLoaded', async () => {
+            await AssignmentHumanDB.init();
+            
+            // Check if user is already logged in
+            if (AssignmentHumanDB.currentUser) {
+                showDashboard();
+            }
+
+            // Custom cursor
+            document.addEventListener('mousemove', (e) => {
+                const cursor = document.querySelector('.cursor-cross');
+                cursor.style.left = e.clientX - 10 + 'px';
+                cursor.style.top = e.clientY - 10 + 'px';
+            });
+        });
+
+        function switchTab(tab) {
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+            
+            if (tab === 'login') {
+                document.querySelectorAll('.auth-tab')[0].classList.add('active');
+                document.getElementById('loginForm').classList.add('active');
+            } else {
+                document.querySelectorAll('.auth-tab')[1].classList.add('active');
+                document.getElementById('signupForm').classList.add('active');
+            }
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const email = formData.get('email');
+            const password = formData.get('password');
+            
+            const { data, error } = await AssignmentHumanDB.signIn(email, password);
+            
+            if (error) {
+                showMessage(error.message, 'error');
+            } else {
+                showMessage('Authentication successful!', 'success');
+                showDashboard();
+            }
+        }
+
+        async function handleSignup(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const username = formData.get('username');
+            const email = formData.get('email');
+            const password = formData.get('password');
+            
+            const { data, error } = await AssignmentHumanDB.signUp(email, password, username);
+            
+            if (error) {
+                showMessage(error.message, 'error');
+            } else {
+                showMessage('Agent initialized! Check email for verification.', 'success');
+            }
+        }
+
+        async function handleAnonymous() {
+            const { data, error } = await AssignmentHumanDB.signInAnonymously();
+            
+            if (error) {
+                showMessage(error.message, 'error');
+            } else {
+                showMessage('Anonymous access granted!', 'success');
+                showDashboard();
+            }
+        }
+
+        async function handleLogout() {
+            await AssignmentHumanDB.signOut();
+            document.getElementById('authContainer').style.display = 'block';
+            document.getElementById('agentDashboard').classList.remove('active');
+            showMessage('Logged out successfully', 'success');
+        }
+
+        function showMessage(message, type) {
+            const messageEl = document.getElementById('authMessage');
+            messageEl.className = 'auth-message ' + type;
+            messageEl.textContent = message;
+            messageEl.style.display = 'block';
+            
+            setTimeout(() => {
+                messageEl.style.display = 'none';
+            }, 5000);
+        }
+
+        async function showDashboard() {
+            document.getElementById('authContainer').style.display = 'none';
+            document.getElementById('agentDashboard').classList.add('active');
+            
+            // Load agent data
+            const agent = AssignmentHumanDB.currentAgent;
+            if (agent) {
+                document.getElementById('agentUsername').textContent = agent.username || 'Anonymous';
+                document.getElementById('agentRank').textContent = agent.rank || 'Recruit';
+                document.getElementById('agentId').textContent = agent.id.substr(0, 8) + '...';
+                document.getElementById('agentPoints').textContent = agent.points || 0;
+            }
+            
+            // Load progress
+            const progress = await AssignmentHumanDB.getMyProgress();
+            const progressList = document.getElementById('progressList');
+            
+            if (progress.length === 0) {
+                progressList.innerHTML = '<p style="color: rgba(0,255,0,0.7);">No active assignments. Visit the main terminal to get started!</p>';
+            } else {
+                progressList.innerHTML = progress.map(p => `
+                    <div class="progress-item">
+                        <h3>${p.assignment?.title || 'Unknown Assignment'}</h3>
+                        <p>${p.assignment?.description || ''}</p>
+                        <span class="progress-status ${p.status}">${p.status}</span>
+                    </div>
+                `).join('');
+            }
+            
+            // Update stats
+            const completedCount = progress.filter(p => p.status === 'completed').length;
+            document.getElementById('assignmentsCompleted').textContent = completedCount;
+        }
+
+        function goToMain() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Human - Command Center</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .command-center {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 2rem;
+        }
+
+        .command-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: rgba(0,0,0,0.9);
+            border: 2px solid var(--terminal-green);
+        }
+
+        .command-header h1 {
+            color: var(--terminal-green);
+            font-size: 2.5rem;
+            text-shadow: 0 0 30px var(--terminal-green);
+            margin-bottom: 1rem;
+        }
+
+        .creation-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: rgba(0,0,0,0.9);
+            padding: 1rem;
+            border: 1px solid var(--terminal-green);
+        }
+
+        .creation-tab {
+            flex: 1;
+            padding: 1rem;
+            background: transparent;
+            border: 2px solid var(--terminal-green);
+            color: var(--terminal-green);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .creation-tab.active {
+            background: var(--terminal-green);
+            color: var(--deep-black);
+            box-shadow: 0 0 20px var(--terminal-green);
+        }
+
+        .creation-form {
+            display: none;
+            background: rgba(0,0,0,0.9);
+            border: 2px solid var(--terminal-green);
+            padding: 2rem;
+        }
+
+        .creation-form.active {
+            display: block;
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(0,255,0,0.3);
+        }
+
+        .form-section:last-child {
+            border-bottom: none;
+        }
+
+        .form-section h3 {
+            color: var(--warning-yellow);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-grid.single {
+            grid-template-columns: 1fr;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--terminal-green);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(0,255,0,0.05);
+            border: 1px solid var(--terminal-green);
+            color: var(--terminal-green);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            box-shadow: 0 0 10px var(--terminal-green);
+            background: rgba(0,255,0,0.1);
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .skill-tag {
+            padding: 0.25rem 0.75rem;
+            background: rgba(0,255,0,0.1);
+            border: 1px solid var(--terminal-green);
+            color: var(--terminal-green);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .skill-tag:hover {
+            background: var(--terminal-green);
+            color: var(--deep-black);
+        }
+
+        .skill-tag.selected {
+            background: var(--terminal-green);
+            color: var(--deep-black);
+        }
+
+        .submit-section {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .submit-btn {
+            padding: 1rem 2rem;
+            background: var(--terminal-green);
+            color: var(--deep-black);
+            border: none;
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: var(--warning-yellow);
+            box-shadow: 0 0 30px var(--warning-yellow);
+            transform: translateY(-2px);
+        }
+
+        .cancel-btn {
+            padding: 1rem 2rem;
+            background: transparent;
+            color: var(--terminal-green);
+            border: 2px solid var(--terminal-green);
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+        }
+
+        .cancel-btn:hover {
+            background: var(--terminal-green);
+            color: var(--deep-black);
+        }
+
+        .message-box {
+            margin: 2rem 0;
+            padding: 1rem;
+            border: 2px solid var(--terminal-green);
+            background: rgba(0,255,0,0.1);
+            text-align: center;
+            display: none;
+        }
+
+        .message-box.error {
+            border-color: #ff0000;
+            background: rgba(255,0,0,0.1);
+            color: #ff0000;
+        }
+
+        .message-box.success {
+            border-color: var(--terminal-green);
+            color: var(--terminal-green);
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor-cross"></div>
+    <div class="scanning-line"></div>
+
+    <!-- Command Center -->
+    <div class="command-center">
+        <div class="command-header">
+            <h1>COMMAND CENTER</h1>
+            <p style="color: var(--warning-yellow);">CREATE & DEPLOY OPERATIONS</p>
+            <p style="color: rgba(0,255,0,0.7); margin-top: 1rem;">
+                Commander privileges required. Your contributions shape humanity's progress.
+            </p>
+        </div>
+
+        <div class="creation-tabs">
+            <button class="creation-tab active" onclick="switchCreationType('assignment')">
+                CREATE ASSIGNMENT
+            </button>
+            <button class="creation-tab" onclick="switchCreationType('mission')">
+                CREATE MISSION
+            </button>
+            <button class="creation-tab" onclick="switchCreationType('team')">
+                CREATE TEAM
+            </button>
+        </div>
+
+        <div id="messageBox" class="message-box"></div>
+
+        <!-- Assignment Creation Form -->
+        <form class="creation-form active" id="assignmentForm" onsubmit="createAssignment(event)">
+            <div class="form-section">
+                <h3>Assignment Details</h3>
+                <div class="form-grid single">
+                    <div class="form-group">
+                        <label>Assignment Title*</label>
+                        <input type="text" name="title" required placeholder="e.g., Deploy Kindness Protocol">
+                    </div>
+                    <div class="form-group">
+                        <label>Description*</label>
+                        <textarea name="description" required placeholder="Detailed description of what the agent needs to do..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Objective*</label>
+                        <input type="text" name="objective" required placeholder="Brief, measurable outcome">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>Classification & Scope</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Classification*</label>
+                        <select name="classification" required>
+                            <option value="">Select Classification</option>
+                            <option value="SOCIAL IMPACT">SOCIAL IMPACT</option>
+                            <option value="EDUCATION">EDUCATION</option>
+                            <option value="PLANET CARE">PLANET CARE</option>
+                            <option value="COMMUNITY BUILDING">COMMUNITY BUILDING</option>
+                            <option value="CULTURAL">CULTURAL</option>
+                            <option value="SPECIES ADVANCEMENT">SPECIES ADVANCEMENT</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Duration Type*</label>
+                        <select name="duration_type" required>
+                            <option value="">Select Duration</option>
+                            <option value="quick">Quick (5-20 minutes)</option>
+                            <option value="medium">Medium (Week to Month)</option>
+                            <option value="deep">Deep (Lifetime)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Scale*</label>
+                        <select name="scale" required>
+                            <option value="">Select Scale</option>
+                            <option value="personal">Personal</option>
+                            <option value="community">Community</option>
+                            <option value="regional">Regional</option>
+                            <option value="national">National</option>
+                            <option value="species">Species</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Location Type*</label>
+                        <select name="location_type" required>
+                            <option value="">Select Location</option>
+                            <option value="local">Local</option>
+                            <option value="regional">Regional</option>
+                            <option value="global">Global</option>
+                            <option value="virtual">Virtual</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>Skills Required (Optional)</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag" data-skill="writing">Writing</span>
+                    <span class="skill-tag" data-skill="programming">Programming</span>
+                    <span class="skill-tag" data-skill="teaching">Teaching</span>
+                    <span class="skill-tag" data-skill="organizing">Organizing</span>
+                    <span class="skill-tag" data-skill="research">Research</span>
+                    <span class="skill-tag" data-skill="design">Design</span>
+                    <span class="skill-tag" data-skill="communication">Communication</span>
+                    <span class="skill-tag" data-skill="leadership">Leadership</span>
+                </div>
+                <input type="hidden" name="skills_required" id="assignmentSkills">
+            </div>
+
+            <div class="submit-section">
+                <button type="submit" class="submit-btn">DEPLOY ASSIGNMENT</button>
+                <button type="button" class="cancel-btn" onclick="window.location.href='index.html'">CANCEL</button>
+            </div>
+        </form>
+
+        <!-- Mission Creation Form -->
+        <form class="creation-form" id="missionForm" onsubmit="createMission(event)">
+            <div class="form-section">
+                <h3>Mission Overview</h3>
+                <div class="form-grid single">
+                    <div class="form-group">
+                        <label>Mission Name*</label>
+                        <input type="text" name="name" required placeholder="e.g., 30-Day Climate Action">
+                    </div>
+                    <div class="form-group">
+                        <label>Mission Description*</label>
+                        <textarea name="description" required placeholder="Describe the overall mission and its goals..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Mission Objective*</label>
+                        <input type="text" name="objective" required placeholder="Ultimate goal to achieve">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>Mission Parameters</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Classification*</label>
+                        <select name="classification" required>
+                            <option value="">Select Classification</option>
+                            <option value="SOCIAL IMPACT">SOCIAL IMPACT</option>
+                            <option value="EDUCATION">EDUCATION</option>
+                            <option value="PLANET CARE">PLANET CARE</option>
+                            <option value="COMMUNITY BUILDING">COMMUNITY BUILDING</option>
+                            <option value="CULTURAL">CULTURAL</option>
+                            <option value="SPECIES ADVANCEMENT">SPECIES ADVANCEMENT</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Duration Estimate*</label>
+                        <input type="text" name="duration_estimate" required placeholder="e.g., 30 days, 3 months">
+                    </div>
+                    <div class="form-group">
+                        <label>Min Assignments to Complete*</label>
+                        <input type="number" name="min_assignments_to_complete" required min="1" value="5">
+                    </div>
+                    <div class="form-group">
+                        <label>Featured Mission?</label>
+                        <select name="is_featured">
+                            <option value="false">No</option>
+                            <option value="true">Yes - Feature this mission</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submit-section">
+                <button type="submit" class="submit-btn">LAUNCH MISSION</button>
+                <button type="button" class="cancel-btn" onclick="window.location.href='index.html'">CANCEL</button>
+            </div>
+        </form>
+
+        <!-- Team Creation Form -->
+        <form class="creation-form" id="teamForm" onsubmit="createTeam(event)">
+            <div class="form-section">
+                <h3>Team Formation</h3>
+                <div class="form-grid single">
+                    <div class="form-group">
+                        <label>Team Name*</label>
+                        <input type="text" name="name" required placeholder="e.g., Chicago Climate Collective">
+                    </div>
+                    <div class="form-group">
+                        <label>Team Description*</label>
+                        <textarea name="description" required placeholder="What is your team's mission and purpose?"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>Team Focus</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Mission Focus*</label>
+                        <select name="mission_focus" required>
+                            <option value="">Select Primary Focus</option>
+                            <option value="SOCIAL IMPACT">SOCIAL IMPACT</option>
+                            <option value="EDUCATION">EDUCATION</option>
+                            <option value="PLANET CARE">PLANET CARE</option>
+                            <option value="COMMUNITY BUILDING">COMMUNITY BUILDING</option>
+                            <option value="CULTURAL">CULTURAL</option>
+                            <option value="SPECIES ADVANCEMENT">SPECIES ADVANCEMENT</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Base Location*</label>
+                        <input type="text" name="location_base" required placeholder="e.g., Chicago, IL or Global">
+                    </div>
+                    <div class="form-group">
+                        <label>Team Visibility*</label>
+                        <select name="is_public" required>
+                            <option value="true">Public - Anyone can join</option>
+                            <option value="false">Private - Invite only</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submit-section">
+                <button type="submit" class="submit-btn">ESTABLISH TEAM</button>
+                <button type="button" class="cancel-btn" onclick="window.location.href='index.html'">CANCEL</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="lib/supabase-enhanced.js"></script>
+    <script>
+        // Initialize
+        window.addEventListener('DOMContentLoaded', async () => {
+            await AssignmentHumanDB.init();
+            
+            // Check if user is logged in
+            if (!AssignmentHumanDB.currentUser) {
+                showMessage('Please login to access the Command Center', 'error');
+                setTimeout(() => {
+                    window.location.href = 'auth.html';
+                }, 2000);
+            }
+
+            // Setup skill tag selection
+            document.querySelectorAll('.skill-tag').forEach(tag => {
+                tag.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                    updateSkillsInput();
+                });
+            });
+
+            // Custom cursor
+            document.addEventListener('mousemove', (e) => {
+                const cursor = document.querySelector('.cursor-cross');
+                cursor.style.left = e.clientX - 10 + 'px';
+                cursor.style.top = e.clientY - 10 + 'px';
+            });
+        });
+
+        function switchCreationType(type) {
+            // Update tabs
+            document.querySelectorAll('.creation-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.creation-form').forEach(form => form.classList.remove('active'));
+            
+            // Activate selected
+            if (type === 'assignment') {
+                document.querySelectorAll('.creation-tab')[0].classList.add('active');
+                document.getElementById('assignmentForm').classList.add('active');
+            } else if (type === 'mission') {
+                document.querySelectorAll('.creation-tab')[1].classList.add('active');
+                document.getElementById('missionForm').classList.add('active');
+            } else if (type === 'team') {
+                document.querySelectorAll('.creation-tab')[2].classList.add('active');
+                document.getElementById('teamForm').classList.add('active');
+            }
+        }
+
+        function updateSkillsInput() {
+            const selected = Array.from(document.querySelectorAll('.skill-tag.selected'))
+                .map(tag => tag.dataset.skill);
+            document.getElementById('assignmentSkills').value = selected.join(',');
+        }
+
+        async function createAssignment(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            
+            const assignment = {
+                title: formData.get('title'),
+                description: formData.get('description'),
+                objective: formData.get('objective'),
+                classification: formData.get('classification'),
+                duration_type: formData.get('duration_type'),
+                duration_estimate: formData.get('duration_type') === 'quick' ? '5-20 minutes' : 
+                                  formData.get('duration_type') === 'medium' ? '1 week - 1 month' : 
+                                  'Lifetime commitment',
+                scale: formData.get('scale'),
+                location_type: formData.get('location_type'),
+                skills_required: formData.get('skills_required').split(',').filter(s => s),
+                is_active: true
+            };
+            
+            const { data, error } = await AssignmentHumanDB.createAssignment(assignment);
+            
+            if (error) {
+                showMessage('Error creating assignment: ' + error, 'error');
+            } else {
+                showMessage('Assignment deployed successfully!', 'success');
+                event.target.reset();
+                document.querySelectorAll('.skill-tag').forEach(tag => tag.classList.remove('selected'));
+            }
+        }
+
+        async function createMission(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            
+            const mission = {
+                name: formData.get('name'),
+                description: formData.get('description'),
+                objective: formData.get('objective'),
+                classification: formData.get('classification'),
+                duration_estimate: formData.get('duration_estimate'),
+                min_assignments_to_complete: parseInt(formData.get('min_assignments_to_complete')),
+                is_featured: formData.get('is_featured') === 'true',
+                is_active: true
+            };
+            
+            const { data, error } = await AssignmentHumanDB.createMission(mission);
+            
+            if (error) {
+                showMessage('Error creating mission: ' + error, 'error');
+            } else {
+                showMessage('Mission launched successfully!', 'success');
+                event.target.reset();
+            }
+        }
+
+        async function createTeam(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            
+            const team = {
+                name: formData.get('name'),
+                description: formData.get('description'),
+                mission_focus: formData.get('mission_focus'),
+                location_base: formData.get('location_base'),
+                is_public: formData.get('is_public') === 'true'
+            };
+            
+            const { data, error } = await AssignmentHumanDB.createTeam(team);
+            
+            if (error) {
+                showMessage('Error creating team: ' + error, 'error');
+            } else {
+                showMessage('Team established successfully! You are now the team leader.', 'success');
+                event.target.reset();
+            }
+        }
+
+        function showMessage(message, type) {
+            const messageBox = document.getElementById('messageBox');
+            messageBox.className = 'message-box ' + type;
+            messageBox.textContent = message;
+            messageBox.style.display = 'block';
+            
+            setTimeout(() => {
+                messageBox.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

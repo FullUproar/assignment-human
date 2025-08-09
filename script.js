@@ -17,17 +17,22 @@ class AssignmentManager {
 
     async detectLocation() {
         try {
-            // Try to get location from IP
-            const response = await fetch('https://ipapi.co/json/');
+            // Try to get location from IP using a CORS-friendly service
+            const response = await fetch('https://api.ipbase.com/v2/info?apikey=free');
             const data = await response.json();
-            this.userLocation = {
-                city: data.city,
-                region: data.region,
-                country: data.country_name
-            };
-            document.getElementById('agentInfo').textContent = 
-                `AGENT: ${data.city?.toUpperCase() || 'UNKNOWN'}, ${data.region?.toUpperCase() || 'EARTH'}`;
+            if (data.data && data.data.location) {
+                this.userLocation = {
+                    city: data.data.location.city?.name,
+                    region: data.data.location.region?.name,
+                    country: data.data.location.country?.name
+                };
+                document.getElementById('agentInfo').textContent = 
+                    `AGENT: ${data.data.location.city?.name?.toUpperCase() || 'UNKNOWN'}, ${data.data.location.region?.name?.toUpperCase() || 'EARTH'}`;
+            } else {
+                document.getElementById('agentInfo').textContent = 'AGENT: LOCATION CLASSIFIED';
+            }
         } catch (error) {
+            // Fallback to browser geolocation or default
             document.getElementById('agentInfo').textContent = 'AGENT: LOCATION CLASSIFIED';
         }
     }

@@ -6,6 +6,7 @@
     <title>Assignment Human</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="mobile-fixes.css">
+    <link rel="stylesheet" href="styles-friendly.css" id="friendlyStyles" disabled>
 </head>
 <body>
     <div class="cursor-cross"></div>
@@ -15,7 +16,8 @@
     <div class="user-status-bar" id="userStatusBar" style="position: fixed; top: 0; right: 0; padding: 1rem; z-index: 9999; background: rgba(0,0,0,0.9); border: 1px solid var(--terminal-green); border-top: none; border-right: none;">
         <div id="userStatus" style="color: var(--terminal-green); font-family: var(--font-mono); font-size: 0.9rem;">
             <span id="userDisplay">GUEST MODE</span> | 
-            <a href="auth.html" style="color: var(--warning-yellow); text-decoration: none;">LOGIN</a>
+            <a href="auth.html" style="color: var(--warning-yellow); text-decoration: none;">LOGIN</a> | 
+            <button onclick="toggleTheme()" style="background: transparent; border: 1px solid var(--terminal-green); color: var(--terminal-green); padding: 0.25rem 0.5rem; cursor: pointer; font-family: inherit; font-size: 0.8rem;" id="themeToggle">FRIENDLY MODE</button>
         </div>
     </div>
 
@@ -190,7 +192,29 @@
                     `AGENT: ${agent?.username || 'Anonymous'} | POINTS: ${agent?.points || 0}`;
                 document.querySelector('#userStatus a').textContent = 'DASHBOARD';
             }
+            
+            // Load theme preference
+            const savedTheme = localStorage.getItem('assignment-human-theme');
+            if (savedTheme === 'friendly') {
+                document.getElementById('friendlyStyles').disabled = false;
+                document.getElementById('themeToggle').textContent = 'TERMINAL MODE';
+            }
         });
+        
+        function toggleTheme() {
+            const friendlyStyles = document.getElementById('friendlyStyles');
+            const themeToggle = document.getElementById('themeToggle');
+            
+            if (friendlyStyles.disabled) {
+                friendlyStyles.disabled = false;
+                themeToggle.textContent = 'TERMINAL MODE';
+                localStorage.setItem('assignment-human-theme', 'friendly');
+            } else {
+                friendlyStyles.disabled = true;
+                themeToggle.textContent = 'FRIENDLY MODE';
+                localStorage.setItem('assignment-human-theme', 'terminal');
+            }
+        }
     </script>
 </body>
 </html>
